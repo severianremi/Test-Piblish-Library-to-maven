@@ -49,32 +49,40 @@ version = "0.2"
 
 if (android.productFlavors.size() > 0) {
     android.libraryVariants.all { variant ->
+        publishing {
+            publications {
+                mavenJava(MavenPublication) {
 
-        if (variant.name.toLowerCase().contains("debug")) {
-            return
-        }
+                    if (variant.name.toLowerCase().contains("debug")) {
+                        return
+                    }
 
-        def bundleTask = tasks["bundle${variant.name.capitalize()}Aar"]
+                    def bundleTask = tasks["bundle${variant.name.capitalize()}Aar"]
 
-        artifacts {
-            archives(bundleTask.archivePath) {
-                classifier variant.flavorName
-                builtBy bundleTask
-                name = project.name
+                    artifacts {
+                        archives(bundleTask.archivePath) {
+                            classifier variant.flavorName
+                            builtBy bundleTask
+                            name = project.name
+                        }
+                    }
+
+                    def flavorName = variant.flavorName.toLowerCase()
+
+                    def flavorSourcesTask = tasks.create(name: "${flavorName}SourcesJar", type: Jar) {
+                        classifier = "${flavorName}-sources"
+                        from android.sourceSets.main.javaDirectories
+                        from android.sourceSets[flavorName].javaDirectories
+                    }
+
+                    artifacts {
+                        archives flavorSourcesTask
+                    }
+
+                }
             }
+
         }
-
-        def flavorName = variant.flavorName.toLowerCase()
-
-        def flavorSourcesTask = tasks.create(name: "${flavorName}SourcesJar", type: Jar) {
-            classifier = "${flavorName}-sources"
-            from android.sourceSets.main.javaDirectories
-            from android.sourceSets[flavorName].javaDirectories
-        }
-
-        artifacts {
-            archives flavorSourcesTask
-        }
-
     }
 }
+
