@@ -1,0 +1,2 @@
+include ':app', ':lib'
+rootProject.name='Publish Library to Maven'
