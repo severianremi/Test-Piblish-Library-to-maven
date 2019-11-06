@@ -23,6 +23,12 @@ android {
         }
     }
 
+    flavorDimensions "version"
+    productFlavors {
+        pro {}
+        free {}
+    }
+
 }
 
 dependencies {
