@@ -44,45 +44,20 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }
 
-group = 'com.github.severianremi:Test-Piblish-Library-to-maven'
-version = "0.2"
+group = 'com.github.severianremi'
+version = "0.4"
 
-if (android.productFlavors.size() > 0) {
-    android.libraryVariants.all { variant ->
-        publishing {
-            publications {
-                mavenJava(MavenPublication) {
-
-                    if (variant.name.toLowerCase().contains("debug")) {
-                        return
-                    }
-
-                    def bundleTask = tasks["bundle${variant.name.capitalize()}Aar"]
-
-                    artifacts {
-                        archives(bundleTask.archivePath) {
-                            classifier variant.flavorName
-                            builtBy bundleTask
-                            name = project.name
-                        }
-                    }
-
-                    def flavorName = variant.flavorName.toLowerCase()
-
-                    def flavorSourcesTask = tasks.create(name: "${flavorName}SourcesJar", type: Jar) {
-                        classifier = "${flavorName}-sources"
-                        from android.sourceSets.main.javaDirectories
-                        from android.sourceSets[flavorName].javaDirectories
-                    }
-
-                    artifacts {
-                        archives flavorSourcesTask
-                    }
-
-                }
+publishing {
+    publications {
+        Production(MavenPublication) {
+            artifact("$buildDir/outputs/aar/lib-free-release.aar") {
+                classifier 'free'
+                extension 'aar'
             }
-
+            artifact("$buildDir/outputs/aar/lib-pro-release.aar") {
+                classifier 'pro'
+                extension 'aar'
+            }
         }
     }
 }
-
