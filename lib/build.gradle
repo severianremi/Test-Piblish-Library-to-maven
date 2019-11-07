@@ -84,6 +84,5 @@ if (android.productFlavors.size() > 0) {
         artifacts {
             archives flavorSourcesTask
         }
-
     }
 }
