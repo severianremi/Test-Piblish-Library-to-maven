@@ -55,7 +55,7 @@ dependencies {
 
 
 group = 'com.github.severianremi'
-version = "1.0.1"
+version = "1.0.2"
 
 if (android.productFlavors.size() > 0) {
     android.libraryVariants.all { variant ->
@@ -75,8 +75,8 @@ if (android.productFlavors.size() > 0) {
         }
 
         def flavorName = variant.flavorName.toLowerCase()
-        def flavorSourcesTask = tasks.create(name : "${flavorName}SourcesJar", type: Jar) {
-            classifier = "${flavorName}-sources"
+        def flavorSourcesTask = tasks.create(name: "${flavorName}SourcesJar", type: Jar) {
+            archiveClassifier.set("${flavorName}-sources")
             from android.sourceSets.main.javaDirectories
             from android.sourceSets[flavorName].javaDirectories
         }
