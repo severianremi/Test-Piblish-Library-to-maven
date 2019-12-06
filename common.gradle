@@ -1,7 +1,7 @@
 apply plugin: 'com.github.dcendents.android-maven'
 
 group = 'com.github.severianremi'
-version = "1.0.0"
+version = "1.0.3"
 
 task sourcesJar(type: Jar) {
     archiveClassifier.set('sources')
@@ -30,7 +30,6 @@ if (android.productFlavors.size() > 0) {
         }
 
         def flavorName = variant.flavorName.toLowerCase()
-
         def flavorSourcesTask = tasks.create(name: "${flavorName}SourcesJar", type: Jar) {
             archiveClassifier.set("${flavorName}-sources")
             from android.sourceSets.main.javaDirectories
