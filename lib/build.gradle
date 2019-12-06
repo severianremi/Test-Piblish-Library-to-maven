@@ -53,8 +53,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }
 
-group = 'com.github.severianremi/Test-Piblish-Library-to-maven'
-version = "1.0.6"
+group = 'com.github.severianremi.Test-Piblish-Library-to-maven'
+version = "1.0.7"
 
 if (android.productFlavors.size() > 0) {
     android.libraryVariants.all { variant ->

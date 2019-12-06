@@ -2,6 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'com.github.dcendents.android-maven'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.0"
@@ -43,7 +45,7 @@ artifacts {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':lib')
+    api project(':lib')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.core:core-ktx:1.0.2'
@@ -52,8 +54,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }
 
-group = 'com.github.severianremi/Test-Piblish-Library-to-maven'
-version = "1.0.6"
+group = 'com.github.severianremi.Test-Piblish-Library-to-maven'
+version = "1.0.7"
 
 if (android.productFlavors.size() > 0) {
     android.libraryVariants.all { variant ->
