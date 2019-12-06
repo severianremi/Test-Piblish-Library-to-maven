@@ -34,14 +34,14 @@ android {
 
 }
 
-//task sourcesJar(type: Jar) {
-//    archiveClassifier = 'sources'
-//    from android.sourceSets.main.javaDirectories
-//}
-//
-//artifacts {
-//    archives sourcesJar
-//}
+task sourcesJar(type: Jar) {
+    archiveClassifier = 'sources'
+    from android.sourceSets.main.javaDirectories
+}
+
+artifacts {
+    archives sourcesJar
+}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -53,39 +53,36 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }
 
-apply from: '../common.gradle'
+group = 'com.github.severianremi/Test-Piblish-Library-to-maven'
+version = "1.0.6"
 
+if (android.productFlavors.size() > 0) {
+    android.libraryVariants.all { variant ->
 
-//group = 'com.github.severianremi'
-//version = "0.9.9"
-//
-//if (android.productFlavors.size() > 0) {
-//    android.libraryVariants.all { variant ->
-//
-//        if (variant.name.toLowerCase().contains("debug")) {
-//            return
-//        }
-//
-//        def bundleTask = tasks["bundle${variant.name.capitalize()}Aar"]
-//
-//        artifacts {
-//            archives(bundleTask.archivePath) {
-//                classifier variant.flavorName
-//                builtBy bundleTask
-//                name = project.name
-//            }
-//        }
-//
-//        def flavorName = variant.flavorName.toLowerCase()
-//        def flavorSourcesTask = tasks.create(name : "${flavorName}SourcesJar", type: Jar) {
-//            classifier = "${flavorName}-sources"
-//            from android.sourceSets.main.javaDirectories
-//            from android.sourceSets[flavorName].javaDirectories
-//        }
-//
-//        artifacts {
-//            archives flavorSourcesTask
-//        }
-//
-//    }
-//}
+        if (variant.name.toLowerCase().contains("debug")) {
+            return
+        }
+
+        def bundleTask = tasks["bundle${variant.name.capitalize()}Aar"]
+
+        artifacts {
+            archives(bundleTask.archivePath) {
+                classifier variant.flavorName
+                builtBy bundleTask
+                name = project.name
+            }
+        }
+
+        def flavorName = variant.flavorName.toLowerCase()
+        def flavorSourcesTask = tasks.create(name : "${flavorName}SourcesJar", type: Jar) {
+            classifier = "${flavorName}-sources"
+            from android.sourceSets.main.javaDirectories
+            from android.sourceSets[flavorName].javaDirectories
+        }
+
+        artifacts {
+            archives flavorSourcesTask
+        }
+
+    }
+}
